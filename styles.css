@@ -1,19 +1,19 @@
 body {
-	font-family: Arial, sans-serif;
-	text-align: center;
-  }
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
-  table {
-	margin: 20px auto;
-	border-collapse: collapse;
-  }
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+}
 
-  td {
-	padding: 10px;
-	border: 1px solid #ccc;
-  }
+td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
 
-  input {
-	width: 100px;
-	text-align: right;
-  }
+input {
+  width: 100px;
+  text-align: right;
+}

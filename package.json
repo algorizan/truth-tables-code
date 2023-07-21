@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@html-eslint/eslint-plugin": "^0.19.0",
+    "@html-eslint/parser": "^0.19.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-css": "^0.8.1",
+    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-json": "^3.1.0"
+  }
+}
