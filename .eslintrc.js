@@ -210,11 +210,11 @@ module.exports = {
                 ignoreMemberSort: true,
             },
         ],
-    // "sort-keys": [
-    //   "error",
-    //   "asc",
-    //   { natural: true },
-    // ],
+        // "sort-keys": [
+        //   "error",
+        //   "asc",
+        //   { natural: true },
+        // ],
         "spaced-comment": [
             "error",
             "always",
@@ -240,7 +240,7 @@ module.exports = {
         ],
         "yoda": ["error", "never", { exceptRange: true } ],
 
-    //* Layout & Formatting
+        //* Layout & Formatting
         "array-bracket-newline": [
             "error",
             {
@@ -299,7 +299,7 @@ module.exports = {
         ],
         "generator-star-spacing": "error",
         "implicit-arrow-linebreak": "error",
-        "indent": ["error", INDENT, { ignoreComments: true } ],
+        "indent": ["error", INDENT, { ignoreComments: false } ],
         "jsx-quotes": "error",
         "key-spacing": "error",
         "keyword-spacing": "error",

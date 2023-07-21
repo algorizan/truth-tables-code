@@ -1,19 +1,56 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
+  background-color: #20174b;
+  color: #d4baea;
+}
+
+h1 {
+  margin: 10px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px auto;
+  width: 80%;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  width: 45%;
+  padding: 5px;
+  resize: vertical;
+  background-color: #d4baea;
+  color:#20174b;
+}
+
+button {
+  margin: 5px;
 }
 
 table {
   margin: 20px auto;
   border-collapse: collapse;
+  background-color: #d4baea;
+  color: #20174b;
 }
 
-td {
+th, td {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #1a1fae;
 }
 
-input {
-  width: 100px;
-  text-align: right;
+code {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  background-color: #d4baea;
+  color:#20174b;
+  padding: 2px 3px;
+  border: 1px solid #616161;
+  border-radius: 5px;
 }
