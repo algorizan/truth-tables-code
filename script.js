@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define, no-bitwise */
-
 const VAR_REGEX_STR = "([A-Za-z]|\\d|_)+";
 const EXPR_REGEX = /^(\w|\s|\d|&&|\|\||!|\?|:|\(|\))+$/;
 
@@ -38,10 +36,6 @@ function initPage() {
     generateExpressionsList();
 }
 
-// localStorage.getItem("value1");
-// localStorage.setItem("value1", value1);
-// localStorage.removeItem("value1");
-
 function addVariable() {
     const variableInput = document.getElementById("variableInput");
     const variable = variableInput.value.trim();
@@ -56,7 +50,6 @@ function addVariable() {
     variableInput.value = "";
 
     generateVariablesList();
-    // generateTruthTable();
 }
 
 function addExpression() {
@@ -73,7 +66,6 @@ function addExpression() {
     expressionInput.value = "";
 
     generateExpressionsList();
-    // generateTruthTable();
 }
 
 function evaluateExpression(expression, variables, row) {
@@ -84,7 +76,6 @@ function evaluateExpression(expression, variables, row) {
 
     const replacedExpression = expression.replace(new RegExp(VAR_REGEX_STR, "g"), (variable) => variableValues[variable]);
     try {
-        // eslint-disable-next-line no-eval
         return eval(replacedExpression);
     }
     catch (error) {
@@ -197,5 +188,6 @@ function isValidVariable(variable) {
 function isValidExpression(expression) {
     return typeof (expression) === "string"
         && EXPR_REGEX.test(expression)
-        && !EXPRESSIONS.includes(expression);
+        && !EXPRESSIONS.includes(expression)
+        && !VARIABLES.includes(expression);
 }
