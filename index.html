@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Table Calculator</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
-  <body>
-    <h1>Table Calculator</h1>
-    <table>
-      <tr>
-        <td>Value 1:</td>
-        <td>
-          <input type="number" id="value1">
-        </td>
-      </tr>
-      <tr>
-        <td>Value 2:</td>
-        <td>
-          <input type="number" id="value2">
-        </td>
-      </tr>
-      <tr>
-        <td>Sum:</td>
-        <td>
-          <input type="number" id="sum" disabled>
-        </td>
-      </tr>
-      <tr>
-        <td>Product:</td>
-        <td>
-          <input type="number" id="product" disabled>
-        </td>
-      </tr>
-    </table>
+<head>
+  <title>Truth Table Generator</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body onload="initPage()">
+  <h1>Truth Table Generator</h1>
+  <p>Enter variables (separated by <strong>spaces</strong>, alphabetic characters only) and logical expressions using those variables:</p>
+  <div class="input-container">
+    <div class="input-field">
+      <label for="variableInput">Variables (e.g., <code>booleanVar</code>)</label>
+      <input type="text" id="variableInput" placeholder="Variable (e.g., booleanVar)">
+      <button class="add-button" id="addVariable" onclick="addVariable()">Add Variable</button>
+    </div>
+    <div class="input-field">
+      <label for="expressionInput">Logical Expression (e.g., <code>A && (B || C)</code>)</label>
+      <input type="text" id="expressionInput" placeholder="Logical Expression (e.g., A && (B || C))">
+      <button class="add-button" id="addExpression" onclick="addExpression()">Add Expression</button>
+    </div>
+  </div>
+  <div class="text-container">
+    <div class="text-field">
+      <ul name="Variables" id="variablesArea">
+        <!-- The variables list will be dynamically generated here -->
+      </ul>
+    </div>
+    <div class="text-field">
+      <ul name="Expressions" id="expressionsArea">
+        <!-- The expressions list will be dynamically generated here -->
+      </ul>
+    </div>
+  </div>
+  <br/>
+  <button class="generate-button" id="generateTruthTable" onclick="generateTruthTable()">Generate Truth Table</button>
 
-    <script src="script.js"></script>
-  </body>
+  <table id="truthTable">
+    <!-- The truth table will be dynamically generated here -->
+  </table>
+
+  <script src="script.js"></script>
+</body>
 </html>
