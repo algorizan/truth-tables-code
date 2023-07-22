@@ -46,7 +46,7 @@ module.exports = {
         "no-unmodified-loop-condition": "warn",
         "no-unreachable-loop": "error",
         "no-unused-private-class-members": "warn",
-        "no-use-before-define": "error",
+        "no-use-before-define": "off",
         "require-atomic-updates": "error",
         "accessor-pairs": "warn",
         "arrow-body-style": [
@@ -102,10 +102,7 @@ module.exports = {
         ],
         "no-alert": "off",
         "no-array-constructor": "error",
-        "no-bitwise": [
-            "warn",
-            { int32Hint: true },
-        ],
+        "no-bitwise": "off",
         "no-caller": "error",
         "no-confusing-arrow": "error",
         "no-continue": "error",
@@ -113,7 +110,7 @@ module.exports = {
         "no-else-return": "error",
         "no-empty-function": "off",
         "no-empty-static-block": "off",
-        "no-eval": "error",
+        "no-eval": "off",
         "no-implied-eval": "error",
         "no-extend-native": "error",
         "no-extra-bind": "error",
@@ -137,7 +134,9 @@ module.exports = {
         "no-magic-numbers": [
             "warn",
             {
-                ignore: [1, 0, -1],
+                ignore: [
+                    1, 0, -1, 2,
+                ],
                 enforceConst: true,
                 ignoreArrayIndexes: true,
                 ignoreClassFieldInitialValues: true,
