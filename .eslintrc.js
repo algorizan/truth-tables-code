@@ -7,7 +7,9 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    plugins: ["html", "css", "@html-eslint"],
+    plugins: [
+        "html", "css", "@html-eslint", "md",
+    ],
     extends: ["eslint:recommended", "plugin:json/recommended", "plugin:css/standard"],
     overrides: [
         {
@@ -23,6 +25,12 @@ module.exports = {
                 "@html-eslint/indent": ["error", INDENT_HTML],
                 "@html-eslint/require-lang": "off",
             },
+        },
+        {
+            files: ["*.md"],
+            parser: "markdown-eslint-parser",
+            extends: ["plugin:md/recommended"],
+            rules: {"md/remark": ["error", {"maximum-line-length": "off"} ]},
         },
     ],
     parserOptions: {
