@@ -3,39 +3,44 @@
 const VAR_REGEX_STR = "([A-Za-z]|\\d|_)+";
 const EXPR_REGEX = /^(\w|\s|\d|&&|\|\||!|\?|:|\(|\))+$/;
 
+const LOCAL_VARIABLES_NAME = "truthTableVariables";
+const LOCAL_EXPRESSIONS_NAME = "truthTableExpressions";
+
 const VARIABLES = [];
 const EXPRESSIONS = [];
 
 function initPage() {
-    const localVariables = localStorage.getItem("variables");
-    const localExpressions = localStorage.getItem("expressions");
+    const localVariablesStr = localStorage.getItem(LOCAL_VARIABLES_NAME);
+    const localExpressionsStr = localStorage.getItem(LOCAL_EXPRESSIONS_NAME);
+    let localVariables, localExpressions;
+
+    try {
+        localVariables = JSON.parse(localVariablesStr);
+    }
+    catch (error) {
+        console.error(`No existing Variables array found in localStorage.`, error);
+    }
+    try {
+        localExpressions = JSON.parse(localExpressionsStr);
+    }
+    catch (error) {
+        console.error(`No existing Expressions array found in localStorage.`, error);
+    }
+
     if (Array.isArray(localVariables)) {
-        VARIABLES.concat(localVariables);
-        // document.getElementById("variableInput").textContent = VARIABLES.join("\n");
+        VARIABLES.push(...localVariables);
     }
     if (Array.isArray(localExpressions)) {
-        EXPRESSIONS.concat(localExpressions);
-        // document.getElementById("expressionInput").textContent = EXPRESSIONS.join("\n");
+        EXPRESSIONS.push(...localExpressions);
     }
 
     generateVariablesList();
     generateExpressionsList();
 }
 
-// if (localStorage.getItem("value1")) {
-//     value1Input.value = localStorage.getItem("value1");
-// }
-
-// if (localStorage.getItem("value2")) {
-//     value2Input.value = localStorage.getItem("value2");
-// }
-// // Save the values to localStorage
+// localStorage.getItem("value1");
 // localStorage.setItem("value1", value1);
-// localStorage.setItem("value2", value2);
-
-// // Clear the values from localStorage
 // localStorage.removeItem("value1");
-// localStorage.removeItem("value2");
 
 function addVariable() {
     const variableInput = document.getElementById("variableInput");
@@ -47,7 +52,7 @@ function addVariable() {
     }
 
     VARIABLES.push(variable);
-    localStorage.setItem("variables", VARIABLES);
+    localStorage.setItem(LOCAL_VARIABLES_NAME, JSON.stringify(VARIABLES));
     variableInput.value = "";
 
     generateVariablesList();
@@ -64,7 +69,7 @@ function addExpression() {
     }
 
     EXPRESSIONS.push(expression);
-    localStorage.setItem("expressions", EXPRESSIONS);
+    localStorage.setItem(LOCAL_EXPRESSIONS_NAME, JSON.stringify(EXPRESSIONS));
     expressionInput.value = "";
 
     generateExpressionsList();
