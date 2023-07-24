@@ -45,8 +45,8 @@ function addVariable() {
         return;
     }
 
-    VARIABLES.push(variable);
-    localStorage.setItem(LOCAL_VARIABLES_NAME, JSON.stringify(VARIABLES));
+    VARIABLES.push({value: variable, visible: true});
+    saveVariables();
     variableInput.value = "";
 
     generateVariablesList();
@@ -61,17 +61,46 @@ function addExpression() {
         return;
     }
 
-    EXPRESSIONS.push(expression);
-    localStorage.setItem(LOCAL_EXPRESSIONS_NAME, JSON.stringify(EXPRESSIONS));
+    EXPRESSIONS.push({ value: expression, visible: true });
+    saveExpressions();
     expressionInput.value = "";
 
     generateExpressionsList();
 }
 
+function removeVariable(variable) {
+    const indexToRemove = VARIABLES.findIndex((vari) => vari.value === (variable.value ? variable.value : variable));
+    if (indexToRemove !== -1) {
+        VARIABLES.splice(indexToRemove, 1);
+    }
+    generateVariablesList();
+    saveVariables();
+}
+
+function removeExpression(expression) {
+    const indexToRemove = EXPRESSIONS.findIndex((expr) => expr.value === (expression.value ? expression.value : expression));
+    if (indexToRemove !== -1) {
+        EXPRESSIONS.splice(indexToRemove, 1);
+    }
+    generateExpressionsList();
+    saveExpressions();
+}
+
+function toggleVisible(item, element) {
+    item.visible = !item.visible;
+    toggleElement(element);
+}
+
+function toggleElement(element) {
+    element.classList.toggle("disabled-background");
+    const toggleButton = element.querySelector(".toggle-button");
+    toggleButton.classList.toggle("fa-eye-slash");
+}
+
 function evaluateExpression(expression, variables, row) {
     const variableValues = {};
     for (let i = 0; i < variables.length; i++) {
-        variableValues[variables[i]] = (row & (1 << (variables.length - i - 1))) > 0;
+        variableValues[variables[i].value] = (row & (1 << (variables.length - i - 1))) > 0;
     }
 
     const replacedExpression = expression.replace(new RegExp(VAR_REGEX_STR, "g"), (variable) => variableValues[variable]);
@@ -86,9 +115,11 @@ function evaluateExpression(expression, variables, row) {
 
 function generateTruthTable() {
     const truthTable = document.getElementById("truthTable");
+    const ENABLED_VARIABLES = VARIABLES.filter((vari) => vari.visible);
+    const ENABLED_EXPRESSIONS = EXPRESSIONS.filter((expr) => expr.visible);
 
-    if (!VARIABLES.length || !EXPRESSIONS.length) {
-        alert("Please enter at least one variable and expression.");
+    if (!ENABLED_VARIABLES.length || !ENABLED_EXPRESSIONS.length) {
+        alert("Please have at least one enabled variable and expression.");
         return;
     }
 
@@ -99,38 +130,40 @@ function generateTruthTable() {
 
     // Create the header row
     const headerRow = document.createElement("tr");
-    for (const variable of VARIABLES) {
+    for (const variable of ENABLED_VARIABLES) {
         const th = document.createElement("th");
-        th.textContent = variable;
+        th.textContent = variable.value;
         headerRow.appendChild(th);
     }
 
     // Create header cells for expressions
-    for (const expression of EXPRESSIONS) {
+    for (const expression of ENABLED_EXPRESSIONS) {
         const th = document.createElement("th");
-        th.textContent = expression;
+        th.textContent = expression.value;
         headerRow.appendChild(th);
     }
 
     truthTable.appendChild(headerRow);
 
     // Generate the truth table rows
-    const numRows = 2 ** VARIABLES.length;
+    const numRows = 2 ** ENABLED_VARIABLES.length;
     for (let i = 0; i < numRows; i++) {
         const row = document.createElement("tr");
-        for (let j = 0; j < VARIABLES.length; j++) {
+        for (let j = 0; j < ENABLED_VARIABLES.length; j++) {
             const td = document.createElement("td");
-            const value = (i & (1 << (VARIABLES.length - j - 1))) ? "1" : "0";
+            const value = (i & (1 << (ENABLED_VARIABLES.length - j - 1))) ? "1" : "0";
             td.textContent = value;
             row.appendChild(td);
         }
 
         // Evaluate all expressions and add corresponding columns
-        for (const expression of EXPRESSIONS) {
-            const result = evaluateExpression(expression, VARIABLES, i);
-            const resultTd = document.createElement("td");
-            resultTd.textContent = result ? "1" : "0";
-            row.appendChild(resultTd);
+        for (const expression of ENABLED_EXPRESSIONS) {
+            if (expression.visible) {
+                const result = evaluateExpression(expression.value, ENABLED_VARIABLES, i);
+                const resultTd = document.createElement("td");
+                resultTd.textContent = result ? "1" : "0";
+                row.appendChild(resultTd);
+            }
         }
 
         truthTable.appendChild(row);
@@ -138,56 +171,132 @@ function generateTruthTable() {
 }
 
 function generateVariablesList() {
-    const variablesArea = document.getElementById("variablesArea");
+    const variablesList = document.getElementById("variablesList");
 
-    while (variablesArea.firstChild) {
-        variablesArea.removeChild(variablesArea.firstChild);
+    while (variablesList.firstChild) {
+        variablesList.removeChild(variablesList.firstChild);
     }
 
     if (!VARIABLES.length) {
-        const li = document.createElement("li");
-        li.textContent = "Added variables will be displayed here.";
-        variablesArea.appendChild(li);
+        const item = document.createElement("span");
+        item.textContent = "Added variables will be displayed here.";
+        variablesList.appendChild(item);
     }
     else {
         VARIABLES.forEach((variable) => {
-            const li = document.createElement("li");
-            li.textContent = variable;
-            variablesArea.appendChild(li);
+            variablesList.appendChild(createVariableItem(variable));
         });
     }
 }
 
 function generateExpressionsList() {
-    const expressionsArea = document.getElementById("expressionsArea");
+    const expressionsList = document.getElementById("expressionsList");
 
-    while (expressionsArea.firstChild) {
-        expressionsArea.removeChild(expressionsArea.firstChild);
+    while (expressionsList.firstChild) {
+        expressionsList.removeChild(expressionsList.firstChild);
     }
 
     if (!EXPRESSIONS.length) {
-        const li = document.createElement("li");
-        li.textContent = "Added expressions will be displayed here.";
-        expressionsArea.appendChild(li);
+        const item = document.createElement("span");
+        item.textContent = "Added expressions will be displayed here.";
+        expressionsList.appendChild(item);
     }
     else {
         EXPRESSIONS.forEach((expression) => {
-            const li = document.createElement("li");
-            li.textContent = expression;
-            expressionsArea.appendChild(li);
+            expressionsList.appendChild(createExpressionItem(expression));
         });
     }
+}
+
+function createVariableItem(variable) {
+    const variableItem = document.createElement("div");
+    variableItem.classList.add("variable-item");
+
+    const toggleButton = document.createElement("button");
+    toggleButton.classList.add("toggle-button", "fas", "fa-eye");
+    toggleButton.addEventListener("click", () => {
+        toggleVisible(variable, variableItem);
+        saveVariables();
+    });
+    variableItem.appendChild(toggleButton);
+    if (!variable.visible) {
+        toggleElement(variableItem);
+    }
+
+    const variableText = document.createElement("span");
+    variableText.innerText = variable.value;
+    variableText.classList.add("variable-text");
+    variableItem.appendChild(variableText);
+
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("delete-button", "fas", "fa-trash-can");
+    removeButton.addEventListener("click", () => {
+        removeVariable(variable);
+    });
+    variableItem.appendChild(removeButton);
+
+    return variableItem;
+}
+
+function createExpressionItem(expression) {
+    const expressionItem = document.createElement("div");
+    expressionItem.classList.add("expression-item");
+
+    const toggleButton = document.createElement("button");
+    toggleButton.classList.add("toggle-button", "fas", "fa-eye");
+    toggleButton.addEventListener("click", () => {
+        toggleVisible(expression, expressionItem);
+        saveExpressions();
+    });
+    expressionItem.appendChild(toggleButton);
+    if (!expression.visible) {
+        toggleElement(expressionItem);
+    }
+
+    const expressionText = document.createElement("span");
+    expressionText.innerText = expression.value;
+    expressionText.classList.add("expression-text");
+    expressionItem.appendChild(expressionText);
+
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("delete-button", "fas", "fa-trash-can");
+    removeButton.addEventListener("click", () => {
+        removeExpression(expression);
+    });
+    expressionItem.appendChild(removeButton);
+
+    return expressionItem;
 }
 
 function isValidVariable(variable) {
     return typeof (variable) === "string"
         && (new RegExp(`^${VAR_REGEX_STR}$`)).test(variable)
-        && !VARIABLES.includes(variable);
+        && !VARIABLES.find((vari) => vari.value === variable);
 }
 
 function isValidExpression(expression) {
     return typeof (expression) === "string"
         && EXPR_REGEX.test(expression)
-        && !EXPRESSIONS.includes(expression)
-        && !VARIABLES.includes(expression);
+        && !(new RegExp(`^${VAR_REGEX_STR}$`)).test(expression)
+        && !EXPRESSIONS.find((expr) => expr.value === expression);
+}
+
+function saveVariables() {
+    localStorage.setItem(LOCAL_VARIABLES_NAME, JSON.stringify(VARIABLES));
+}
+
+function saveExpressions() {
+    localStorage.setItem(LOCAL_EXPRESSIONS_NAME, JSON.stringify(EXPRESSIONS));
+}
+
+function removeAllVariables() {
+    VARIABLES.splice(0, VARIABLES.length);
+    localStorage.removeItem(LOCAL_VARIABLES_NAME);
+    generateVariablesList();
+}
+
+function removeAllExpressions() {
+    EXPRESSIONS.splice(0, EXPRESSIONS.length);
+    localStorage.removeItem(LOCAL_EXPRESSIONS_NAME);
+    generateExpressionsList();
 }
