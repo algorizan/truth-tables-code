@@ -3,13 +3,17 @@ const EXPR_REGEX = /^(\w|\s|\d|&&|\|\||!|\?|:|\(|\))+$/;
 
 const LOCAL_VARIABLES_NAME = "truthTableVariables";
 const LOCAL_EXPRESSIONS_NAME = "truthTableExpressions";
+const LOCAL_TOGGLETF_NAME = "toggleTF";
 
 const VARIABLES = [];
 const EXPRESSIONS = [];
 
+let toggleTF = false;
+
 function initPage() {
     const localVariablesStr = localStorage.getItem(LOCAL_VARIABLES_NAME);
     const localExpressionsStr = localStorage.getItem(LOCAL_EXPRESSIONS_NAME);
+    const localToggleTF = localStorage.getItem(LOCAL_TOGGLETF_NAME);
     let localVariables, localExpressions;
 
     try {
@@ -30,6 +34,13 @@ function initPage() {
     }
     if (Array.isArray(localExpressions)) {
         EXPRESSIONS.push(...localExpressions);
+    }
+
+    if (localToggleTF) {
+        toggleTF = localToggleTF;
+        const toggleButton = document.getElementById("toggleTFButton");
+        toggleButton.textContent = toggleTF ? "T/F" : "1/0";
+        toggleButton.classList.toggle("active", toggleTF);
     }
 
     generateVariablesList();
@@ -115,8 +126,10 @@ function evaluateExpression(expression, variables, row) {
 
 function generateTruthTable() {
     const truthTable = document.getElementById("truthTable");
-    const ENABLED_VARIABLES = VARIABLES.filter((vari) => vari.visible);
+    const ENABLED_VARIABLES   =   VARIABLES.filter((vari) => vari.visible);
     const ENABLED_EXPRESSIONS = EXPRESSIONS.filter((expr) => expr.visible);
+    const VALUE_TRUE  = toggleTF ? "T" : "1";
+    const VALUE_FALSE = toggleTF ? "F" : "0";
 
     if (!ENABLED_VARIABLES.length || !ENABLED_EXPRESSIONS.length) {
         alert("Please have at least one enabled variable and expression.");
@@ -151,7 +164,7 @@ function generateTruthTable() {
         const row = document.createElement("tr");
         for (let j = 0; j < ENABLED_VARIABLES.length; j++) {
             const td = document.createElement("td");
-            const value = (i & (1 << (ENABLED_VARIABLES.length - j - 1))) ? "1" : "0";
+            const value = (i & (1 << (ENABLED_VARIABLES.length - j - 1))) ? VALUE_TRUE : VALUE_FALSE;
             td.textContent = value;
             row.appendChild(td);
         }
@@ -161,7 +174,7 @@ function generateTruthTable() {
             if (expression.visible) {
                 const result = evaluateExpression(expression.value, ENABLED_VARIABLES, i);
                 const resultTd = document.createElement("td");
-                resultTd.textContent = result ? "1" : "0";
+                resultTd.textContent = result ? VALUE_TRUE : VALUE_FALSE;
                 row.appendChild(resultTd);
             }
         }
@@ -299,4 +312,12 @@ function removeAllExpressions() {
     EXPRESSIONS.splice(0, EXPRESSIONS.length);
     localStorage.removeItem(LOCAL_EXPRESSIONS_NAME);
     generateExpressionsList();
+}
+
+function toggleTFSwitch() {
+    const toggleButton = document.getElementById("toggleTFButton");
+    toggleTF = !toggleTF;
+    localStorage.setItem(LOCAL_TOGGLETF_NAME, toggleTF);
+    toggleButton.textContent = toggleTF ? "T/F" : "1/0";
+    toggleButton.classList.toggle("active", toggleTF);
 }

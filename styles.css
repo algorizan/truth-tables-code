@@ -69,19 +69,45 @@ code {
   margin: 20px auto;
 }
 
-.generate-button {
-  margin: 5px;
+/** BUTTONS */
+
+button {
+  cursor: pointer;
   background-color: #14183e;
   color: #be85f0;
+}
+
+.generate-button {
+  margin: 5px;
   width: 50%;
   padding: 10px;
   font-size: large;
 }
 
 .add-button {
-  background-color: #14183e;
-  color: #be85f0;
   width: calc(100% + 15px);
+}
+
+
+.switch-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.switch-button {
+  font-size: 18px;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.switch-button.active {
+  background-color: #be85f0;
+  color: #14183e;
 }
 
 /** VARIABLES */
