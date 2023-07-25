@@ -54,7 +54,7 @@ code {
   width: auto;
 }
 
-.text-container {
+.lists-container {
   display: flex;
   justify-content: space-around;
   margin: 20px auto;
@@ -73,8 +73,9 @@ code {
 
 button {
   cursor: pointer;
-  background-color: #14183e;
+  background-color: #20174b;
   color: #be85f0;
+  border-color: #d4baea;
 }
 
 .generate-button {
@@ -88,27 +89,74 @@ button {
   width: calc(100% + 15px);
 }
 
-
-.switch-container {
+.table-buttons-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
-.switch-button {
-  font-size: 18px;
-  padding: 10px 20px;
-  border: 2px solid #ccc;
-  border-radius: 20px;
-  transition: background-color 0.3s ease;
-}
+/** SLIDER */
 
-.switch-button.active {
-  background-color: #be85f0;
-  color: #14183e;
-}
+  .slider-button {
+    width: 80px;
+    height: 40px;
+    background-color: #20174b;
+    border: 2px solid;
+    border-radius: 20px;
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+
+  .slider {
+    width: 40px;
+    height: 40px;
+    background-color: #20174b;
+    border: 2px solid;
+    border-radius: 50%;
+    position:relative;
+    top: -1.5px;
+    left: -2.5px;
+    transition: transform 0.3s ease;
+  }
+
+  .option {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    text-align: center;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  .option:nth-child(1) {
+    left: 6px;
+  }
+
+  .option:nth-child(2) {
+    right: 0px;
+  }
+
+  .active .slider-button {
+    background-color: #d4baea;
+  }
+
+  .active .slider {
+    transform: translateX(95%);
+    background-color: #be85f0;
+    /* box-shadow: 0 0 6px #be85f0; */
+    border-radius: 50%;
+  }
+
+  .active .option:nth-child(1) {
+    color: #be85f0;
+  }
+
+  .active .option:nth-child(2) {
+    color: #20174b;
+  }
 
 /** VARIABLES */
 
@@ -130,16 +178,16 @@ button {
   color: #20174b;
 }
 
-.variable-item .toggle-button {
+.variable-item .visibility-toggle {
   background-color: #d4baea;
-  color: #14183e;
+  color: #20174b;
   border-color: #be85f0;
   margin-right: 5px;
 }
 
 .variable-item .delete-button {
   background-color: #d4baea;
-  color: #14183e;
+  color: #20174b;
   border-color: #f03633;
   margin-left: 5px;
 }
@@ -149,7 +197,7 @@ button {
 }
 
 .clear-variables {
-  background-color: #14183e;
+  background-color: #20174b;
   color: #be85f0;
   border-color: #f03633;
 }
@@ -174,16 +222,16 @@ button {
   color: #20174b;
 }
 
-.expression-item .toggle-button {
+.expression-item .visibility-toggle {
   background-color: #d4baea;
-  color: #14183e;
+  color: #20174b;
   border-color: #be85f0;
   margin-right: 5px;
 }
 
 .expression-item .delete-button {
   background-color: #d4baea;
-  color: #14183e;
+  color: #20174b;
   border-color: #f03633;
   margin-left: 5px;
 }
@@ -193,7 +241,7 @@ button {
 }
 
 .clear-expressions {
-  background-color: #14183e;
+  background-color: #20174b;
   color: #be85f0;
   border-color: #f03633;
 }

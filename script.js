@@ -36,11 +36,8 @@ function initPage() {
         EXPRESSIONS.push(...localExpressions);
     }
 
-    if (localToggleTF) {
-        toggleTF = localToggleTF;
-        const toggleButton = document.getElementById("toggleTFButton");
-        toggleButton.textContent = toggleTF ? "T/F" : "1/0";
-        toggleButton.classList.toggle("active", toggleTF);
+    if (localToggleTF === "true") {
+        toggleTFSwitch();
     }
 
     generateVariablesList();
@@ -97,14 +94,14 @@ function removeExpression(expression) {
     saveExpressions();
 }
 
-function toggleVisible(item, element) {
+function toggleVisibility(item, element) {
     item.visible = !item.visible;
-    toggleElement(element);
+    toggleVisibilityElement(element);
 }
 
-function toggleElement(element) {
+function toggleVisibilityElement(element) {
     element.classList.toggle("disabled-background");
-    const toggleButton = element.querySelector(".toggle-button");
+    const toggleButton = element.querySelector(".visibility-toggle");
     toggleButton.classList.toggle("fa-eye-slash");
 }
 
@@ -226,14 +223,14 @@ function createVariableItem(variable) {
     variableItem.classList.add("variable-item");
 
     const toggleButton = document.createElement("button");
-    toggleButton.classList.add("toggle-button", "fas", "fa-eye");
+    toggleButton.classList.add("visibility-toggle", "fas", "fa-eye");
     toggleButton.addEventListener("click", () => {
-        toggleVisible(variable, variableItem);
+        toggleVisibility(variable, variableItem);
         saveVariables();
     });
     variableItem.appendChild(toggleButton);
     if (!variable.visible) {
-        toggleElement(variableItem);
+        toggleVisibilityElement(variableItem);
     }
 
     const variableText = document.createElement("span");
@@ -256,14 +253,14 @@ function createExpressionItem(expression) {
     expressionItem.classList.add("expression-item");
 
     const toggleButton = document.createElement("button");
-    toggleButton.classList.add("toggle-button", "fas", "fa-eye");
+    toggleButton.classList.add("visibility-toggle", "fas", "fa-eye");
     toggleButton.addEventListener("click", () => {
-        toggleVisible(expression, expressionItem);
+        toggleVisibility(expression, expressionItem);
         saveExpressions();
     });
     expressionItem.appendChild(toggleButton);
     if (!expression.visible) {
-        toggleElement(expressionItem);
+        toggleVisibilityElement(expressionItem);
     }
 
     const expressionText = document.createElement("span");
@@ -315,9 +312,8 @@ function removeAllExpressions() {
 }
 
 function toggleTFSwitch() {
-    const toggleButton = document.getElementById("toggleTFButton");
     toggleTF = !toggleTF;
+    const toggleSwitch = document.querySelector(".slider-button");
+    toggleSwitch.classList.toggle("active", toggleTF);
     localStorage.setItem(LOCAL_TOGGLETF_NAME, toggleTF);
-    toggleButton.textContent = toggleTF ? "T/F" : "1/0";
-    toggleButton.classList.toggle("active", toggleTF);
 }
