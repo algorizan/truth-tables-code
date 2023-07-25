@@ -76,6 +76,7 @@ button {
   background-color: #20174b;
   color: #be85f0;
   border-color: #d4baea;
+  padding: 4px;
 }
 
 .generate-button {
@@ -100,6 +101,7 @@ button {
 /** SLIDER */
 
   .slider-button {
+    cursor: pointer;
     width: 80px;
     height: 40px;
     background-color: #20174b;
@@ -115,8 +117,8 @@ button {
     background-color: #20174b;
     border: 2px solid;
     border-radius: 50%;
-    position:relative;
-    top: -1.5px;
+    position: absolute;
+    top: -2px;
     left: -2.5px;
     transition: transform 0.3s ease;
   }
@@ -129,14 +131,17 @@ button {
     text-align: center;
     font-size: 14px;
     transition: color 0.3s ease;
+    color: #d4baea;
   }
 
   .option:nth-child(1) {
     left: 6px;
+    color: #be85f0;
   }
 
   .option:nth-child(2) {
-    right: 0px;
+    right: 6px;
+    color: #d4baea;
   }
 
   .active .slider-button {
@@ -146,12 +151,12 @@ button {
   .active .slider {
     transform: translateX(95%);
     background-color: #be85f0;
-    /* box-shadow: 0 0 6px #be85f0; */
+    box-shadow: 0 0 6px #be85f0;
     border-radius: 50%;
   }
 
   .active .option:nth-child(1) {
-    color: #be85f0;
+    color: #d4baea;
   }
 
   .active .option:nth-child(2) {
@@ -192,10 +197,6 @@ button {
   margin-left: 5px;
 }
 
-.variable-item button {
-  margin-right: 10px;
-}
-
 .clear-variables {
   background-color: #20174b;
   color: #be85f0;
@@ -234,10 +235,6 @@ button {
   color: #20174b;
   border-color: #f03633;
   margin-left: 5px;
-}
-
-.expression-item button {
-  margin-right: 10px;
 }
 
 .clear-expressions {
