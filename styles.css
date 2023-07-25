@@ -114,9 +114,10 @@ button {
   .slider {
     width: 40px;
     height: 40px;
-    background-color: #20174b;
+    background-color: #493d86;
     border: 2px solid;
     border-radius: 50%;
+    border-color: #d4baea;
     position: absolute;
     top: -2px;
     left: -2.5px;
@@ -131,35 +132,36 @@ button {
     text-align: center;
     font-size: 14px;
     transition: color 0.3s ease;
-    color: #d4baea;
+    color: #be85f0;
   }
 
-  .option:nth-child(1) {
-    left: 6px;
+  .option:nth-child(3) {
+    left: -1px;
     color: #be85f0;
   }
 
   .option:nth-child(2) {
-    right: 6px;
+    right: -1px;
     color: #d4baea;
   }
 
-  .active .slider-button {
-    background-color: #d4baea;
+  .slider-button.active {
+    background-color: #493d86;
   }
 
-  .active .slider {
-    transform: translateX(95%);
+  .slider-button.active .slider {
+    transform: translateX(96%);
     background-color: #be85f0;
-    box-shadow: 0 0 6px #be85f0;
+    border-color: #d4baea;
+    /* box-shadow: 0 0 6px #be85f0; */
     border-radius: 50%;
   }
 
-  .active .option:nth-child(1) {
+  .slider-button.active .option:nth-child(3) {
     color: #d4baea;
   }
 
-  .active .option:nth-child(2) {
+  .slider-button.active .option:nth-child(2) {
     color: #20174b;
   }
 
