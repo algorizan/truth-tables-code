@@ -54,7 +54,7 @@ code {
   width: auto;
 }
 
-.text-container {
+.lists-container {
   display: flex;
   justify-content: space-around;
   margin: 20px auto;
@@ -69,20 +69,101 @@ code {
   margin: 20px auto;
 }
 
+/** BUTTONS */
+
+button {
+  cursor: pointer;
+  background-color: #20174b;
+  color: #be85f0;
+  border-color: #d4baea;
+  padding: 4px;
+}
+
 .generate-button {
   margin: 5px;
-  background-color: #14183e;
-  color: #be85f0;
   width: 50%;
   padding: 10px;
   font-size: large;
 }
 
 .add-button {
-  background-color: #14183e;
-  color: #be85f0;
   width: calc(100% + 15px);
 }
+
+.table-buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/** SLIDER */
+
+  .slider-button {
+    cursor: pointer;
+    width: 80px;
+    height: 40px;
+    background-color: #20174b;
+    border: 2px solid;
+    border-radius: 20px;
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+
+  .slider {
+    width: 40px;
+    height: 40px;
+    background-color: #493d86;
+    border: 2px solid;
+    border-radius: 50%;
+    border-color: #d4baea;
+    position: absolute;
+    top: -2px;
+    left: -2.5px;
+    transition: transform 0.3s ease;
+  }
+
+  .option {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    text-align: center;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    color: #be85f0;
+  }
+
+  .option:nth-child(3) {
+    left: -1px;
+    color: #be85f0;
+  }
+
+  .option:nth-child(2) {
+    right: -1px;
+    color: #d4baea;
+  }
+
+  .slider-button.active {
+    background-color: #493d86;
+  }
+
+  .slider-button.active .slider {
+    transform: translateX(96%);
+    background-color: #be85f0;
+    border-color: #d4baea;
+    /* box-shadow: 0 0 6px #be85f0; */
+    border-radius: 50%;
+  }
+
+  .slider-button.active .option:nth-child(3) {
+    color: #d4baea;
+  }
+
+  .slider-button.active .option:nth-child(2) {
+    color: #20174b;
+  }
 
 /** VARIABLES */
 
@@ -104,26 +185,22 @@ code {
   color: #20174b;
 }
 
-.variable-item .toggle-button {
+.variable-item .visibility-toggle {
   background-color: #d4baea;
-  color: #14183e;
+  color: #20174b;
   border-color: #be85f0;
   margin-right: 5px;
 }
 
 .variable-item .delete-button {
   background-color: #d4baea;
-  color: #14183e;
+  color: #20174b;
   border-color: #f03633;
   margin-left: 5px;
 }
 
-.variable-item button {
-  margin-right: 10px;
-}
-
 .clear-variables {
-  background-color: #14183e;
+  background-color: #20174b;
   color: #be85f0;
   border-color: #f03633;
 }
@@ -148,26 +225,22 @@ code {
   color: #20174b;
 }
 
-.expression-item .toggle-button {
+.expression-item .visibility-toggle {
   background-color: #d4baea;
-  color: #14183e;
+  color: #20174b;
   border-color: #be85f0;
   margin-right: 5px;
 }
 
 .expression-item .delete-button {
   background-color: #d4baea;
-  color: #14183e;
+  color: #20174b;
   border-color: #f03633;
   margin-left: 5px;
 }
 
-.expression-item button {
-  margin-right: 10px;
-}
-
 .clear-expressions {
-  background-color: #14183e;
+  background-color: #20174b;
   color: #be85f0;
   border-color: #f03633;
 }

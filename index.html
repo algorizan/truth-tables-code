@@ -22,7 +22,7 @@
       <button class="add-button" id="addExpression" onclick="addExpression()">Add Expression</button>
     </div>
   </div>
-  <div class="text-container">
+  <div class="lists-container">
     <div class="text-field" id="variablesList">
       <!-- The variables list will be dynamically generated here -->
     </div>
@@ -31,7 +31,14 @@
     </div>
   </div>
   <br/>
-  <button class="generate-button" id="generateTruthTable" onclick="generateTruthTable()">Generate Truth Table</button>
+  <div class="table-buttons-container">
+    <button class="generate-button" id="generateTruthTable" onclick="generateTruthTable()">Generate Truth Table</button>
+    <div class="slider-button" onclick="toggleTFSwitch()">
+      <div class="slider"></div>
+      <div class="option">T/F</div>
+      <div class="option">1/0</div>
+    </div>
+  </div>
 
   <table id="truthTable">
     <!-- The truth table will be dynamically generated here -->
