@@ -69,6 +69,7 @@ th {
   padding: 10px;
   border: 1px solid #20174b;
   background-color: #b795d4;
+  border-bottom-width: 3px;
 }
 
 td {

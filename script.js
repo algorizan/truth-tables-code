@@ -146,6 +146,8 @@ function generateTruthTable() {
         headerRow.appendChild(th);
     }
 
+    headerRow.lastElementChild.style.borderRightWidth = "3px";
+
     // Create header cells for expressions
     for (const expression of ENABLED_EXPRESSIONS) {
         const th = document.createElement("th");
@@ -168,6 +170,8 @@ function generateTruthTable() {
             td.textContent = value;
             row.appendChild(td);
         }
+
+        row.lastElementChild.style.borderRightWidth = "3px";
 
         // Evaluate all expressions and add corresponding columns
         for (const expression of ENABLED_EXPRESSIONS) {
