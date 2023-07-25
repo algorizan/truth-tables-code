@@ -162,6 +162,9 @@ function generateTruthTable() {
         for (let j = 0; j < ENABLED_VARIABLES.length; j++) {
             const td = document.createElement("td");
             const value = (i & (1 << (ENABLED_VARIABLES.length - j - 1))) ? VALUE_TRUE : VALUE_FALSE;
+            if (value === VALUE_FALSE) {
+                td.classList.toggle("false-cell");
+            }
             td.textContent = value;
             row.appendChild(td);
         }
@@ -170,9 +173,12 @@ function generateTruthTable() {
         for (const expression of ENABLED_EXPRESSIONS) {
             if (expression.visible) {
                 const result = evaluateExpression(expression.value, ENABLED_VARIABLES, i);
-                const resultTd = document.createElement("td");
-                resultTd.textContent = result ? VALUE_TRUE : VALUE_FALSE;
-                row.appendChild(resultTd);
+                const td = document.createElement("td");
+                td.textContent = result ? VALUE_TRUE : VALUE_FALSE;
+                if (!result) {
+                    td.classList.toggle("false-cell");
+                }
+                row.appendChild(td);
             }
         }
 

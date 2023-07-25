@@ -19,18 +19,6 @@ input {
   color:#20174b;
 }
 
-table {
-  margin: 20px auto;
-  border-collapse: collapse;
-  background-color: #d4baea;
-  color: #20174b;
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid #1a1fae;
-}
-
 code {
   font-family: 'Courier New', monospace;
   font-size: 14px;
@@ -67,6 +55,30 @@ code {
   width: 40%;
   height: 100%;
   margin: 20px auto;
+}
+
+/** TRUTH TABLE */
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  color: #20174b;
+}
+
+th {
+  padding: 10px;
+  border: 1px solid #20174b;
+  background-color: #b795d4;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #20174b;
+  background-color: #d4baea;
+}
+
+td.false-cell {
+  background-color: #d4baead6;
 }
 
 /** BUTTONS */
