@@ -2,10 +2,10 @@
 <browserconfig>
   <msapplication>
     <tile>
-      <square70x70logo src="https://algorizan.github.io/truth-tables-code/images/truth-tables-code-icon.png"/>
-      <square150x150logo src="https://algorizan.github.io/truth-tables-code/images/truth-tables-code-icon.png"/>
-      <square310x310logo src="https://algorizan.github.io/truth-tables-code/images/truth-tables-code-icon.png"/>
-      <wide310x150logo src="https://algorizan.github.io/truth-tables-code/images/truth-tables-code-icon.png"/>
+      <square70x70logo src="https://algorizan.github.io/truth-tables-code/images/truth-tables-code-icon-70x70.png"/>
+      <square150x150logo src="https://algorizan.github.io/truth-tables-code/images/truth-tables-code-icon-150x150.png"/>
+      <square310x310logo src="https://algorizan.github.io/truth-tables-code/images/truth-tables-code-icon-310x310.png"/>
+      <wide310x150logo src="https://algorizan.github.io/truth-tables-code/images/truth-tables-code-icon-310x150.png"/>
       <TileColor>#20174b</TileColor>
     </tile>
   </msapplication>
