@@ -1,52 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Truth Table Generator</title>
-  <link rel="icon" href="./favicon.ico">
-  <link rel="shortcut icon" href="./favicon.ico">
-  <link rel="apple-touch-icon" href="./images/truth-tables-code-icon.png">
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body onload="initPage()">
-  <h1>Truth Table Generator</h1>
-  <button class="clear-variables" id="clearVariables" onclick="removeAllVariables()">Remove all variables</button>
-  <button class="clear-expressions" id="clearExpressions" onclick="removeAllExpressions()">Remove all expressions</button>
-  <p>Enter variables and logical expressions that those variables. You must add them one at a time using the provided buttons.</p>
-  <div class="input-container">
-    <div class="input-field">
-      <label for="variableInput">Variables (e.g., <code>booleanVar</code>)</label>
-      <input type="text" id="variableInput" placeholder="Variable (e.g., booleanVar)">
-      <button class="add-button" id="addVariable" onclick="addVariable()">Add Variable</button>
+  <head>
+    <title>Truth Table Generator</title>
+    <link rel="icon" href="./favicon.ico">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link rel="apple-touch-icon" href="./images/truth-tables-code-icon-152.png">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body onload="initPage()">
+    <h1>Truth Table Generator</h1>
+    <button class="clear-variables" id="clearVariables" onclick="removeAllVariables()">Remove all variables</button>
+    <button class="clear-expressions" id="clearExpressions" onclick="removeAllExpressions()">Remove all expressions</button>
+    <p>Enter variables and logical expressions that those variables. You must add them one at a time using the provided buttons.</p>
+    <div class="input-container">
+      <div class="input-field">
+        <label for="variableInput">
+          Variables (e.g., <code>booleanVar</code>)
+        </label>
+        <input type="text" id="variableInput" placeholder="Variable (e.g., booleanVar)">
+        <button class="add-button" id="addVariable" onclick="addVariable()">Add Variable</button>
+      </div>
+      <div class="input-field">
+        <label for="expressionInput">
+          Logical Expression (e.g., <code>A && (B || C)</code>)
+        </label>
+        <input type="text" id="expressionInput" placeholder="Logical Expression (e.g., A && (B || C))">
+        <button class="add-button" id="addExpression" onclick="addExpression()">Add Expression</button>
+      </div>
     </div>
-    <div class="input-field">
-      <label for="expressionInput">Logical Expression (e.g., <code>A && (B || C)</code>)</label>
-      <input type="text" id="expressionInput" placeholder="Logical Expression (e.g., A && (B || C))">
-      <button class="add-button" id="addExpression" onclick="addExpression()">Add Expression</button>
+    <div class="lists-container">
+      <div class="text-field" id="variablesList">
+        <!-- The variables list will be dynamically generated here -->
+      </div>
+      <div class="text-field" id="expressionsList">
+        <!-- The expressions list will be dynamically generated here -->
+      </div>
     </div>
-  </div>
-  <div class="lists-container">
-    <div class="text-field" id="variablesList">
-      <!-- The variables list will be dynamically generated here -->
+    <br>
+    <div class="table-buttons-container">
+      <button class="generate-button" id="generateTruthTable" onclick="generateTruthTable()">Generate Truth Table</button>
+      <div class="slider-button" onclick="toggleTFSwitch()">
+        <div class="slider"></div>
+        <div class="option">T/F</div>
+        <div class="option">1/0</div>
+      </div>
     </div>
-    <div class="text-field" id="expressionsList">
-      <!-- The expressions list will be dynamically generated here -->
-    </div>
-  </div>
-  <br/>
-  <div class="table-buttons-container">
-    <button class="generate-button" id="generateTruthTable" onclick="generateTruthTable()">Generate Truth Table</button>
-    <div class="slider-button" onclick="toggleTFSwitch()">
-      <div class="slider"></div>
-      <div class="option">T/F</div>
-      <div class="option">1/0</div>
-    </div>
-  </div>
 
-  <table id="truthTable">
-    <!-- The truth table will be dynamically generated here -->
-  </table>
+    <table id="truthTable">
+      <!-- The truth table will be dynamically generated here -->
+    </table>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

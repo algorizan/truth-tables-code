@@ -24,6 +24,7 @@ module.exports = {
             rules: {
                 "@html-eslint/indent": ["error", INDENT_HTML],
                 "@html-eslint/require-lang": "off",
+                "spaced-comment": "off",
             },
         },
         {
