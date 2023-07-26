@@ -5,18 +5,24 @@ body {
   color: #d4baea;
 }
 
-h1 {
-  margin: 10px;
-  color: #be85f0;
+[lang] {
+  display: unset;
+}
+[lang=en] {
+  display: unset;
+}
+[lang=es] {
+  display: none;
+}
+select {
+  background-color: #d4baea;
+  color: #20174b;
 }
 
-input {
-  width: 100%;
-  padding: 5px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  background-color: #d4baea;
-  color:#20174b;
+h1 {
+  margin: 20px;
+  margin-top: 40px;
+  color: #be85f0;
 }
 
 code {
@@ -29,32 +35,15 @@ code {
   border-radius: 5px;
 }
 
-.input-container {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px auto;
-  width: 95%;
+.language-dropdown {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
 }
 
-.input-field {
-  display: flex;
-  flex-direction: column;
-  width: auto;
-}
-
-.lists-container {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px auto;
-  width: 95%;
-}
-
-.text-field {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  height: 100%;
-  margin: 20px auto;
+.description {
+  margin: 20px;
 }
 
 /** TRUTH TABLE */
@@ -100,7 +89,7 @@ button {
 }
 
 .add-button {
-  width: calc(100% + 15px);
+  width: 100%;
 }
 
 .table-buttons-container {
@@ -178,82 +167,146 @@ button {
     color: #20174b;
   }
 
-/** VARIABLES */
+  /** VARIABLES & EXPRESSIONS */
+  .variables-expressions-container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    justify-items: center;
+    margin: 20px auto;
+    width: 90%;
+  }
 
-.variable-item {
-  display: flex;
-  align-items: center;
-  background-color: #d4baea;
-  padding: 5px;
-  margin-bottom: 5px;
-}
+  .input-container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin: 20px auto;
+    width: 90%;
+  }
 
-.variable-item.disabled-background {
-  background-color: #d4baea66;
-}
+  .variable-input {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 30%;
+  }
 
-.variable-item .variable-text {
-  flex-grow: 1;
-  overflow-wrap: break-word;
-  color: #20174b;
-}
+  .expression-input {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 55%;
+  }
 
-.variable-item .visibility-toggle {
-  background-color: #d4baea;
-  color: #20174b;
-  border-color: #be85f0;
-  margin-right: 5px;
-}
+  input {
+    width: calc(100% - 8px);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: #d4baea;
+    color:#20174b;
+  }
 
-.variable-item .delete-button {
-  background-color: #d4baea;
-  color: #20174b;
-  border-color: #f03633;
-  margin-left: 5px;
-}
+  .lists-container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin: 20px auto;
+    width: 90%;
+  }
 
-.clear-variables {
-  background-color: #20174b;
-  color: #be85f0;
-  border-color: #f03633;
-}
+  .variable-list {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    height: 100%;
+    width: 30%;
+  }
 
-/** EXPRESSIONS */
+  .expression-list {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    height: 100%;
+    width: 55%;
+  }
 
-.expression-item {
-  display: flex;
-  align-items: center;
-  background-color: #d4baea;
-  padding: 5px;
-  margin-bottom: 5px;
-}
+  .variable-item {
+    display: flex;
+    align-items: center;
+    background-color: #d4baea;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
 
-.expression-item.disabled-background {
-  background-color: #d4baea66;
-}
+  .expression-item {
+    display: flex;
+    align-items: center;
+    background-color: #d4baea;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
 
-.expression-item .expression-text {
-  flex-grow: 1;
-  overflow-wrap: break-word;
-  color: #20174b;
-}
+  .variable-item.disabled-background {
+    background-color: #d4baea66;
+  }
 
-.expression-item .visibility-toggle {
-  background-color: #d4baea;
-  color: #20174b;
-  border-color: #be85f0;
-  margin-right: 5px;
-}
+  .expression-item.disabled-background {
+    background-color: #d4baea66;
+  }
 
-.expression-item .delete-button {
-  background-color: #d4baea;
-  color: #20174b;
-  border-color: #f03633;
-  margin-left: 5px;
-}
+  .variable-item .variable-text {
+    flex-grow: 1;
+    overflow-wrap: break-word;
+    text-align: center;
+    color: #20174b;
+  }
 
-.clear-expressions {
-  background-color: #20174b;
-  color: #be85f0;
-  border-color: #f03633;
-}
+  .expression-item .expression-text {
+    flex-grow: 1;
+    overflow-wrap: break-word;
+    text-align: start;
+    color: #20174b;
+  }
+
+  .variable-item .visibility-toggle {
+    background-color: #d4baea;
+    color: #20174b;
+    border-color: #be85f0;
+    margin-right: 5px;
+  }
+
+  .expression-item .visibility-toggle {
+    background-color: #d4baea;
+    color: #20174b;
+    border-color: #be85f0;
+    margin-right: 5px;
+  }
+
+  .variable-item .delete-button {
+    background-color: #d4baea;
+    color: #20174b;
+    border-color: #f03633;
+    margin-left: 5px;
+  }
+
+  .expression-item .delete-button {
+    background-color: #d4baea;
+    color: #20174b;
+    border-color: #f03633;
+    margin-left: 5px;
+  }
+
+  .clear-variables {
+    background-color: #20174b;
+    color: #be85f0;
+    border-color: #f03633;
+  }
+
+  .clear-expressions {
+    background-color: #20174b;
+    color: #be85f0;
+    border-color: #f03633;
+  }

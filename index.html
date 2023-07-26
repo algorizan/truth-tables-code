@@ -1,48 +1,100 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Truth Table Generator</title>
+    <title lang="en">Truth Table Generator for JavaScript</title>
+    <title lang="es">Generador de Tablas de Verdad en JavaScript</title>
+
     <link rel="icon" href="./favicon.ico">
     <link rel="shortcut icon" href="./favicon.ico">
     <link rel="apple-touch-icon" href="./images/truth-tables-code-icon-152.png">
+
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
   <body onload="initPage()">
-    <h1>Truth Table Generator</h1>
-    <button class="clear-variables" id="clearVariables" onclick="removeAllVariables()">Remove all variables</button>
-    <button class="clear-expressions" id="clearExpressions" onclick="removeAllExpressions()">Remove all expressions</button>
-    <p>Enter variables and logical expressions that those variables. You must add them one at a time using the provided buttons.</p>
-    <div class="input-container">
-      <div class="input-field">
-        <label for="variableInput">
-          Variables (e.g., <code>booleanVar</code>)
-        </label>
-        <input type="text" id="variableInput" placeholder="Variable (e.g., booleanVar)">
-        <button class="add-button" id="addVariable" onclick="addVariable()">Add Variable</button>
-      </div>
-      <div class="input-field">
-        <label for="expressionInput">
-          Logical Expression (e.g., <code>A && (B || C)</code>)
-        </label>
-        <input type="text" id="expressionInput" placeholder="Logical Expression (e.g., A && (B || C))">
-        <button class="add-button" id="addExpression" onclick="addExpression()">Add Expression</button>
-      </div>
+    <h1>
+      <span lang="en">Truth Table Generator for JavaScript</span>
+      <span lang="es">Generador de Tablas de Verdad en JavaScript</span>
+    </h1>
+    <div class="language-dropdown">
+      <select id="languageSelector" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <!-- <option value="en" lang="es">Inglés</option> -->
+
+        <option value="es">Spanish</option>
+        <!-- <option value="es" lang="es">Español</option> -->
+      </select>
     </div>
-    <div class="lists-container">
-      <div class="text-field" id="variablesList">
-        <!-- The variables list will be dynamically generated here -->
-      </div>
-      <div class="text-field" id="expressionsList">
-        <!-- The expressions list will be dynamically generated here -->
-      </div>
-    </div>
+
+    <button class="clear-variables" id="clearVariables" onclick="removeAllVariables()">
+      <span lang="en">Remove all variables</span>
+      <span lang="es">Eliminar todas las variables</span>
+    </button>
+    <button class="clear-expressions" id="clearExpressions" onclick="removeAllExpressions()">
+      <span lang="en">Remove all expressions</span>
+      <span lang="es">Eliminar todas las expresiones</span>
+    </button>
     <br>
+
+    <div class="description">
+      <p lang="en">
+        Enter variables and logical expressions that use those variables. You must add them one at a time using the provided buttons.
+      </p>
+      <p lang="es">
+        Introduce variables y expresiones lógicas que usen esas variables.
+        Ambas deben ser añadidas de una en una usando la casilla y el botón.
+      </p>
+    </div>
+
+    <div class="variables-expressions-container">
+      <div class="input-container">
+        <div class="variable-input">
+          <label for="variableInput">
+            Variables (e.g., <code>booleanVar</code>)
+          </label>
+          <input type="text" id="variableInput" placeholder="Variable (e.g., booleanVar)">
+          <button class="add-button" id="addVariable" onclick="addVariable()">
+            <span lang="en">Add Variable</span>
+            <span lang="es">Añadir Variable</span>
+          </button>
+        </div>
+        <div class="expression-input">
+          <label for="expressionInput">
+            <span lang="en">Logical Expression</span>
+            <span lang="es">Expresión Lógica</span>
+            (e.g., <code>A && (B || C)</code>)
+          </label>
+          <input type="text" id="expressionInput" placeholder="e.g., A && (B || C)">
+          <button class="add-button" id="addExpression" onclick="addExpression()">
+            <span lang="en">Add Expression</span>
+            <span lang="es">Añadir Expresión</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="lists-container">
+        <div class="variable-list" id="variablesList">
+          <!-- The variables list will be dynamically generated here -->
+        </div>
+        <div class="expression-list" id="expressionsList">
+          <!-- The expressions list will be dynamically generated here -->
+        </div>
+      </div>
+    </div>
+
+    <br>
+
     <div class="table-buttons-container">
-      <button class="generate-button" id="generateTruthTable" onclick="generateTruthTable()">Generate Truth Table</button>
+      <button class="generate-button" id="generateTruthTable" onclick="generateTruthTable()">
+        <span lang="en">Generate Truth Table</span>
+        <span lang="es">Generar Tabla de Verdad</span>
+      </button>
       <div class="slider-button" onclick="toggleTFSwitch()">
         <div class="slider"></div>
-        <div class="option">T/F</div>
+        <div class="option">
+          <span lang="en">T/F</span>
+          <span lang="es">V/F</span>
+        </div>
         <div class="option">1/0</div>
       </div>
     </div>

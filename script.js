@@ -1,19 +1,31 @@
 const VAR_REGEX_STR = "([A-Za-z]|\\d|_)+";
 const EXPR_REGEX = /^(\w|\s|\d|&&|\|\||!|\?|:|\(|\))+$/;
 
+const SUPPORTED_LANGUAGES = ["en", "es"];
+const DEFAULT_LANG = "en";
+
 const LOCAL_VARIABLES_NAME = "truthTableVariables";
 const LOCAL_EXPRESSIONS_NAME = "truthTableExpressions";
 const LOCAL_TOGGLETF_NAME = "toggleTF";
+const LOCAL_SAVED_LANG_NAME = "truthTableLanguage";
 
 const VARIABLES = [];
 const EXPRESSIONS = [];
 
+const LETTER_FALSE = "F";
+const LETTER_TRUE = {
+    en: "T",
+    es: "V",
+};
+
 let toggleTF = false;
+let currLang = DEFAULT_LANG;
 
 function initPage() {
     const localVariablesStr = localStorage.getItem(LOCAL_VARIABLES_NAME);
     const localExpressionsStr = localStorage.getItem(LOCAL_EXPRESSIONS_NAME);
     const localToggleTF = localStorage.getItem(LOCAL_TOGGLETF_NAME);
+    const localSavedLang = localStorage.getItem(LOCAL_SAVED_LANG_NAME);
     let localVariables, localExpressions;
 
     try {
@@ -39,6 +51,8 @@ function initPage() {
     if (localToggleTF === "true") {
         toggleTFSwitch();
     }
+
+    setLanguage(localSavedLang);
 
     generateVariablesList();
     generateExpressionsList();
@@ -125,8 +139,8 @@ function generateTruthTable() {
     const truthTable = document.getElementById("truthTable");
     const ENABLED_VARIABLES   =   VARIABLES.filter((vari) => vari.visible);
     const ENABLED_EXPRESSIONS = EXPRESSIONS.filter((expr) => expr.visible);
-    const VALUE_TRUE  = toggleTF ? "T" : "1";
-    const VALUE_FALSE = toggleTF ? "F" : "0";
+    const VALUE_TRUE  = toggleTF ? LETTER_TRUE[currLang] : "1";
+    const VALUE_FALSE = toggleTF ? LETTER_FALSE : "0";
 
     if (!ENABLED_VARIABLES.length || !ENABLED_EXPRESSIONS.length) {
         alert("Please have at least one enabled variable and expression.");
@@ -326,4 +340,23 @@ function toggleTFSwitch() {
     const toggleSwitch = document.querySelector(".slider-button");
     toggleSwitch.classList.toggle("active", toggleTF);
     localStorage.setItem(LOCAL_TOGGLETF_NAME, toggleTF);
+}
+
+function setLanguage(newLang) {
+    currLang = DEFAULT_LANG;
+    if (newLang && SUPPORTED_LANGUAGES.includes(newLang)) {
+        currLang = newLang;
+    }
+
+    document.querySelectorAll(`[lang]:lang(${currLang})`).forEach((node) => {
+        node.style.display = "unset";
+    });
+    document.querySelectorAll(`[lang]:not(:lang(${currLang}))`).forEach((node) => {
+        node.style.display = "none";
+    });
+
+    const langDropdown = document.getElementById("languageSelector");
+    langDropdown.selectedIndex = SUPPORTED_LANGUAGES.indexOf(currLang);
+
+    localStorage.setItem(LOCAL_SAVED_LANG_NAME, currLang);
 }
