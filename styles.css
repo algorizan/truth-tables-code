@@ -5,15 +5,6 @@ body {
   color: #d4baea;
 }
 
-[lang] {
-  display: unset;
-}
-[lang=en] {
-  display: unset;
-}
-[lang=es] {
-  display: none;
-}
 select {
   background-color: #d4baea;
   color: #20174b;
@@ -67,7 +58,7 @@ td {
   background-color: #d4baea;
 }
 
-td.false-cell {
+td.letter-false {
   background-color: #d4baead6;
 }
 

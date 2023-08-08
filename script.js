@@ -1,7 +1,74 @@
+// import locales from "./locales.json";
+const locales = {
+    "languages": {
+        en: "English",
+        es: "Español",
+    },
+    "title": {
+        en: "Truth Table Generator for JavaScript",
+        es: "Generador de Tablas de Verdad en JavaScript",
+    },
+    "header": {
+        en: "Truth Table Generator for JavaScript",
+        es: "Generador de Tablas de Verdad en JavaScript",
+    },
+    "clearVariables": {
+        en: "Remove all variables",
+        es: "Eliminar todas las variables",
+    },
+    "clearExpressions": {
+        en: "Remove all expressions",
+        es: "Eliminar todas las expresiones",
+    },
+    "description": {
+        en: "Enter variables and logical expressions that use those variables.\nYou must add them one at a time using the provided buttons.",
+        es: "Introduce variables y expresiones lógicas que usen esas variables.\nAmbas deben ser añadidas de una en una usando la casilla y el botón.",
+    },
+    "variableInputLabel": {
+        en: "Variables (e.g., <code>booleanVar</code>)",
+        es: "Variables (e.g., <code>booleanVar</code>)",
+    },
+    "variableInputPlaceholder": {
+        en: "Variable (e.g., booleanVar)",
+        es: "Variable (e.g., booleanVar)",
+    },
+    "addVariable": {
+        en: "Add Variable",
+        es: "Añadir Variable",
+    },
+    "expressionInputLabel": {
+        en: "Logical Expression (e.g., <code>A && (B || C)</code>)",
+        es: "Expresión Lógica (e.g., <code>A && (B || C)</code>)",
+    },
+    "expressionInputPlaceholder": {
+        en: "Expression e.g., A && (B || C)",
+        es: "Expresión e.g., A && (B || C)",
+    },
+    "addExpression": {
+        en: "Add Expression",
+        es: "Añadir Expresión",
+    },
+    "generateTruthTable": {
+        en: "Generate Truth Table",
+        es: "Generar Tabla de Verdad",
+    },
+    "toggleTFOption": {
+        en: "T/F",
+        es: "V/F",
+    },
+    "letter-true": {
+        en: "T",
+        es: "V",
+    },
+    "letter-false": {
+        en: "F",
+        es: "F",
+    },
+};
 const VAR_REGEX_STR = "([A-Za-z]|\\d|_)+";
 const EXPR_REGEX = /^(\w|\s|\d|&&|\|\||!|\?|:|\(|\))+$/;
 
-const SUPPORTED_LANGUAGES = ["en", "es"];
+const SUPPORTED_LANGUAGES = Object.keys(locales.languages);
 const DEFAULT_LANG = "en";
 
 const LOCAL_VARIABLES_NAME = "truthTableVariables";
@@ -12,14 +79,12 @@ const LOCAL_SAVED_LANG_NAME = "truthTableLanguage";
 const VARIABLES = [];
 const EXPRESSIONS = [];
 
-const LETTER_FALSE = "F";
-const LETTER_TRUE = {
-    en: "T",
-    es: "V",
-};
-
 let toggleTF = false;
 let currLang = DEFAULT_LANG;
+
+document.addEventListener("DOMContentLoaded", function() {
+    initPage();
+});
 
 function initPage() {
     const localVariablesStr = localStorage.getItem(LOCAL_VARIABLES_NAME);
@@ -27,6 +92,34 @@ function initPage() {
     const localToggleTF = localStorage.getItem(LOCAL_TOGGLETF_NAME);
     const localSavedLang = localStorage.getItem(LOCAL_SAVED_LANG_NAME);
     let localVariables, localExpressions;
+
+    generateLanguageSelector();
+    setLanguage(localSavedLang);
+
+    const clearVariablesButton = document.getElementById("clearVariables");
+    if (clearVariablesButton) {
+        clearVariablesButton.onclick = () => removeAllVariables();
+    }
+    const clearExpressionsButton = document.getElementById("clearExpressions");
+    if (clearExpressionsButton) {
+        clearExpressionsButton.onclick = () => removeAllExpressions();
+    }
+    const addVariableButton = document.getElementById("addVariable");
+    if (addVariableButton) {
+        addVariableButton.onclick = () => addVariable();
+    }
+    const addExpressionButton = document.getElementById("addExpression");
+    if (addExpressionButton) {
+        addExpressionButton.onclick = () => addExpression();
+    }
+    const truthTableButton = document.getElementById("generateTruthTable");
+    if (truthTableButton) {
+        truthTableButton.onclick = () => generateTruthTable();
+    }
+    const toggleTFButton = document.getElementById("toggleTFSwitch");
+    if (toggleTFButton) {
+        toggleTFButton.onclick = () => toggleTFSwitch();
+    }
 
     try {
         localVariables = JSON.parse(localVariablesStr);
@@ -51,8 +144,6 @@ function initPage() {
     if (localToggleTF === "true") {
         toggleTFSwitch();
     }
-
-    setLanguage(localSavedLang);
 
     generateVariablesList();
     generateExpressionsList();
@@ -139,8 +230,8 @@ function generateTruthTable() {
     const truthTable = document.getElementById("truthTable");
     const ENABLED_VARIABLES   =   VARIABLES.filter((vari) => vari.visible);
     const ENABLED_EXPRESSIONS = EXPRESSIONS.filter((expr) => expr.visible);
-    const VALUE_TRUE  = toggleTF ? LETTER_TRUE[currLang] : "1";
-    const VALUE_FALSE = toggleTF ? LETTER_FALSE : "0";
+    const VALUE_TRUE  = toggleTF ? locales["letter-true"][currLang] : "1";
+    const VALUE_FALSE = toggleTF ? locales["letter-false"][currLang] : "0";
 
     if (!ENABLED_VARIABLES.length || !ENABLED_EXPRESSIONS.length) {
         alert("Please have at least one enabled variable and expression.");
@@ -178,10 +269,13 @@ function generateTruthTable() {
         for (let j = 0; j < ENABLED_VARIABLES.length; j++) {
             const td = document.createElement("td");
             const value = (i & (1 << (ENABLED_VARIABLES.length - j - 1))) ? VALUE_TRUE : VALUE_FALSE;
-            if (value === VALUE_FALSE) {
-                td.classList.toggle("false-cell");
-            }
             td.textContent = value;
+            if (value === VALUE_FALSE) {
+                td.classList.toggle("letter-false");
+            }
+            else {
+                td.classList.toggle("letter-true");
+            }
             row.appendChild(td);
         }
 
@@ -190,11 +284,14 @@ function generateTruthTable() {
         // Evaluate all expressions and add corresponding columns
         for (const expression of ENABLED_EXPRESSIONS) {
             if (expression.visible) {
-                const result = evaluateExpression(expression.value, ENABLED_VARIABLES, i);
                 const td = document.createElement("td");
+                const result = evaluateExpression(expression.value, ENABLED_VARIABLES, i);
                 td.textContent = result ? VALUE_TRUE : VALUE_FALSE;
                 if (!result) {
-                    td.classList.toggle("false-cell");
+                    td.classList.toggle("letter-false");
+                }
+                else {
+                    td.classList.toggle("letter-true");
                 }
                 row.appendChild(td);
             }
@@ -342,21 +439,62 @@ function toggleTFSwitch() {
     localStorage.setItem(LOCAL_TOGGLETF_NAME, toggleTF);
 }
 
+function generateLanguageSelector() {
+    const langDropdown = document.getElementById("languageDropdown");
+    const langSelector = document.createElement("select");
+
+    langSelector.id = "languageSelector";
+    Object.entries(locales.languages).forEach((lang) => {
+        const option = document.createElement("option");
+        option.value = lang[0];
+        option.text = lang[1];
+        langSelector.appendChild(option);
+    });
+    langSelector.onchange = (changeEvent) => {
+        setLanguage(changeEvent.target.value);
+    };
+
+    while (langDropdown.firstChild) {
+        langDropdown.removeChild(langDropdown.firstChild);
+    }
+    langDropdown.appendChild(langSelector);
+}
+
 function setLanguage(newLang) {
-    currLang = DEFAULT_LANG;
+    const prevLang = currLang;
     if (newLang && SUPPORTED_LANGUAGES.includes(newLang)) {
         currLang = newLang;
     }
+    else if (!currLang) {
+        currLang = DEFAULT_LANG;
+    }
 
-    document.querySelectorAll(`[lang]:lang(${currLang})`).forEach((node) => {
-        node.style.display = "unset";
-    });
-    document.querySelectorAll(`[lang]:not(:lang(${currLang}))`).forEach((node) => {
-        node.style.display = "none";
-    });
+    for (const id in locales) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = locales[id][currLang];
+        }
+        else if (id.includes("Placeholder")) {
+            const inputElement = document.getElementById(id.replace("Placeholder", ""));
+            if (inputElement) {
+                inputElement.placeholder = locales[id][currLang];
+            }
+        }
+        else if (id === "letter-true" || id === "letter-false" || prevLang) {
+            const tableCells = document.getElementsByClassName(id);
+            if (tableCells.length) {
+                for (const cell of tableCells) {
+                    if (cell.textContent === locales[id][prevLang]) {
+                        cell.textContent = locales[id][currLang];
+                    }
+                }
+            }
+        }
+    }
 
-    const langDropdown = document.getElementById("languageSelector");
-    langDropdown.selectedIndex = SUPPORTED_LANGUAGES.indexOf(currLang);
-
+    const langSelector = document.getElementById("languageSelector");
+    if (langSelector) {
+        langSelector.selectedIndex = SUPPORTED_LANGUAGES.indexOf(currLang);
+    }
     localStorage.setItem(LOCAL_SAVED_LANG_NAME, currLang);
 }
