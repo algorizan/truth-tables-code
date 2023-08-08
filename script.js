@@ -462,10 +462,14 @@ function generateLanguageSelector() {
 
 function setLanguage(newLang) {
     const prevLang = currLang;
+    const userLang = SUPPORTED_LANGUAGES.find((key) => navigator.language.startsWith(key));
     if (newLang && SUPPORTED_LANGUAGES.includes(newLang)) {
         currLang = newLang;
     }
-    else if (!currLang) {
+    else if (userLang) {
+        currLang = userLang;
+    }
+    else {
         currLang = DEFAULT_LANG;
     }
 
