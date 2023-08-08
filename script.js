@@ -497,4 +497,5 @@ function setLanguage(newLang) {
         langSelector.selectedIndex = SUPPORTED_LANGUAGES.indexOf(currLang);
     }
     localStorage.setItem(LOCAL_SAVED_LANG_NAME, currLang);
+    document.documentElement.lang = currLang;
 }

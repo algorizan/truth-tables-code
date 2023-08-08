@@ -8,6 +8,20 @@ body {
 select {
   background-color: #d4baea;
   color: #20174b;
+  width: max-content;
+}
+
+option {
+  background-color: #d4baea;
+  color: #20174b;
+  accent-color: #be85f0;
+}
+option:hover,
+select::selection, option::selection, select::-moz-selection, option::-moz-selection
+select:active, option:active
+{
+  background-color: #be85f0;
+  color: #20174b;
 }
 
 h1 {
@@ -70,6 +84,10 @@ button {
   color: #be85f0;
   border-color: #d4baea;
   padding: 4px;
+}
+
+button:hover, .slider-button:hover {
+  box-shadow: 0 0 6px #be85f0;
 }
 
 .generate-button {
@@ -276,6 +294,10 @@ button {
     margin-right: 5px;
   }
 
+  .visibility-toggle:hover {
+    box-shadow: 0 0 6px #20174b;
+  }
+
   .variable-item .delete-button {
     background-color: #d4baea;
     color: #20174b;
@@ -300,4 +322,8 @@ button {
     background-color: #20174b;
     color: #be85f0;
     border-color: #f03633;
+  }
+
+  .clear-variables:hover, .clear-expressions:hover, .delete-button:hover {
+    box-shadow: 0 0 6px #f03633;
   }
