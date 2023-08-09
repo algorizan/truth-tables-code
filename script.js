@@ -39,14 +39,33 @@ function initPage() {
     if (clearExpressionsButton) {
         clearExpressionsButton.onclick = () => removeAllExpressions();
     }
+
     const addVariableButton = document.getElementById("addVariable");
     if (addVariableButton) {
         addVariableButton.onclick = () => addVariable();
     }
+    const variableInput = document.getElementById("variableInput");
+    if (variableInput) {
+        variableInput.addEventListener("keypress", (ev) => {
+            if (ev.key === "Enter") {
+                addVariable();
+            }
+        });
+    }
+
     const addExpressionButton = document.getElementById("addExpression");
     if (addExpressionButton) {
         addExpressionButton.onclick = () => addExpression();
     }
+    const expressionInput = document.getElementById("expressionInput");
+    if (expressionInput) {
+        expressionInput.addEventListener("keypress", (ev) => {
+            if (ev.key === "Enter") {
+                addExpression();
+            }
+        });
+    }
+
     const truthTableButton = document.getElementById("generateTruthTable");
     if (truthTableButton) {
         truthTableButton.onclick = () => generateTruthTable();
@@ -102,7 +121,7 @@ function addVariable() {
 
 function addExpression() {
     const expressionInput = document.getElementById("expressionInput");
-    const expression = expressionInput.value.trim();
+    const expression = prettifyExpression(expressionInput.value.trim());
 
     if (!isValidExpression(expression)) {
         alert("Please enter a valid unique logical expression.");
@@ -345,6 +364,23 @@ function isValidExpression(expression) {
         && EXPR_REGEX.test(expression)
         && !(new RegExp(`^${VAR_REGEX_STR}$`)).test(expression)
         && !EXPRESSIONS.find((expr) => expr.value === expression);
+}
+
+function prettifyExpression(expression) {
+    // Add spaces around operators
+    let result = expression
+        .replace(/&&/g, " && ")
+        .replace(/\|\|/g, " || ")
+        .replace(/\(\s*/g, "(")
+        .replace(/\s*\)/g, ")")
+        .replace(/\?/g, " ? ")
+        .replace(/:/g, " : ")
+        .replace(/!\s*/g, "!");
+
+    // Remove extra spaces
+    result = result.replace(/\s+/g, " ");
+
+    return result;
 }
 
 function saveVariables() {

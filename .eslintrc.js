@@ -210,14 +210,14 @@ module.exports = {
         "prefer-rest-params": "warn",
         "prefer-spread": "error",
         "prefer-template": "error",
-        "sort-imports": [
-            "error",
-            {
-                allowSeparatedGroups: true,
-                ignoreCase: true,
-                ignoreMemberSort: true,
-            },
-        ],
+        // "sort-imports": [
+        //     "error",
+        //     {
+        //         allowSeparatedGroups: true,
+        //         ignoreCase: true,
+        //         ignoreMemberSort: true,
+        //     },
+        // ],
         // "sort-keys": [
         //   "error",
         //   "asc",
